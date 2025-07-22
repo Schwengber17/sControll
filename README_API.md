@@ -325,7 +325,7 @@ A aplicação inicia com dados pré-carregados para facilitar os testes:
 - **Account → Transaction**: One-to-Many com cascata de exclusão
 - **Prevenção de referências circulares** em JSON
 
-### 🛡️ Proteções Implementadas
+### Proteções Implementadas
 - **Cascata inteligente**: Deletar usuário remove contas e transações
 - **Validação rigorosa**: Todos os dados são validados antes da persistência
 - **Integridade referencial**: Relacionamentos são mantidos consistentes
