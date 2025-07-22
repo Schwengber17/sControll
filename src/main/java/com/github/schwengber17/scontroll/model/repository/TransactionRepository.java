@@ -1,6 +1,5 @@
 package com.github.schwengber17.scontroll.model.repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +12,4 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     
     List<Transaction> findByCategoryOrderByDateDesc(String category);
     
-    List<Transaction> findByDateBetweenOrderByDateDesc(LocalDate startDate, LocalDate endDate);
-    
-    List<Transaction> findByAccountIdAndDateBetweenOrderByDateDesc(Integer accountId, LocalDate startDate, LocalDate endDate);
 }
