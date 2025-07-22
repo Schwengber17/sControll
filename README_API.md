@@ -28,7 +28,7 @@ Sistema de controle financeiro desenvolvido em Spring Boot para gerenciar as fin
 
 ## Estrutura da API
 
-### 📋 UserController (`/api/users`)
+### UserController (`/api/users`)
 
 | Método | Endpoint | Descrição | Validações |
 |--------|----------|-----------|------------|
@@ -60,7 +60,7 @@ POST /api/users/1/accounts
 }
 ```
 
-### 👨‍👩‍👧‍👦 FamilyController (`/api/families`)
+### FamilyController (`/api/families`)
 
 | Método | Endpoint | Descrição | Validações |
 |--------|----------|-----------|------------|
@@ -72,7 +72,7 @@ POST /api/users/1/accounts
 | `POST` | `/api/families/{familyId}/users/{userId}` | Adicionar usuário à família | IDs válidos |
 | `DELETE` | `/api/families/{familyId}/users/{userId}` | Remover usuário da família | IDs válidos |
 
-### 💳 AccountController (`/api/accounts`)
+### AccountController (`/api/accounts`)
 
 | Método | Endpoint | Descrição | Validações |
 |--------|----------|-----------|------------|
@@ -108,7 +108,7 @@ POST /api/transactions
 }
 ```
 
-### 🏷️ CategoryController (`/api/categories`)
+###  CategoryController (`/api/categories`)
 
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
@@ -136,7 +136,7 @@ POST /api/transactions
 ### Family
 - **name**: Obrigatório, 2-20 caracteres
 
-## 🚨 Sistema de Tratamento de Erros
+##  Sistema de Tratamento de Erros
 
 A API implementa tratamento global de erros com respostas padronizadas.
 
@@ -205,7 +205,7 @@ A API implementa tratamento global de erros com respostas padronizadas.
 }
 ```
 
-## 📋 Modelos de Dados
+## Modelos de Dados
 
 ### User
 ```json
@@ -252,7 +252,7 @@ A API implementa tratamento global de erros com respostas padronizadas.
 }
 ```
 
-## 🚀 Como Executar
+## Como Executar
 
 ### Pré-requisitos
 - Java 21+
@@ -289,7 +289,7 @@ npm start
   - Username: `sa`
   - Password: (deixe em branco)
 
-## 📊 Dados de Exemplo
+## Dados de Exemplo
 
 A aplicação inicia com dados pré-carregados para facilitar os testes:
 
@@ -312,9 +312,9 @@ A aplicação inicia com dados pré-carregados para facilitar os testes:
 - Salário Maria: +R$ 4.000,00
 - Internet: -R$ 80,00
 
-## 🔧 Funcionalidades Especiais
+## Funcionalidades Especiais
 
-### ⚡ Gestão Automática de Saldo
+### Gestão Automática de Saldo
 - Transações atualizam automaticamente o saldo da conta
 - Valores positivos = receitas | Valores negativos = despesas
 - Edições/exclusões reajustam o saldo automaticamente
@@ -331,7 +331,7 @@ A aplicação inicia com dados pré-carregados para facilitar os testes:
 - **Integridade referencial**: Relacionamentos são mantidos consistentes
 - **Tratamento de erros**: Respostas padronizadas para facilitar integração
 
-## 🎯 Próximos Passos
+## Próximos Passos
 
 ### Backend
 - [ ] **Implementar sistema de relatórios** - Criar ReportController para análises financeiras
@@ -358,28 +358,12 @@ A aplicação inicia com dados pré-carregados para facilitar os testes:
 - [ ] Deploy em cloud (AWS/Azure)
 - [ ] Monitoramento e logging
 
-## 📝 Arquivos de Documentação
+## Arquivos de Documentação
 
 - **`README_API.md`** - Esta documentação completa da API
 - **`TRATAMENTO_ERROS.md`** - Detalhes sobre o sistema de erros
 - **`TESTES_API.md`** - Exemplos de testes da API
 - **`TODO.md`** - Lista de tarefas e melhorias pendentes
 
-## 🤝 Contribuição
 
-Contribuições são bem-vindas! Siga estas etapas:
-
-1. Fork o projeto
-2. Crie uma feature branch (`git checkout -b feature/nova-funcionalidade`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/nova-funcionalidade`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
----
-
-*SControl - Seu sistema de controle financeiro familiar* 🏠💰
 
