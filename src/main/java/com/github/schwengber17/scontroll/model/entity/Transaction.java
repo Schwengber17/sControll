@@ -3,8 +3,12 @@ package com.github.schwengber17.scontroll.model.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.github.schwengber17.scontroll.model.enums.CategoryEnum;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -46,8 +50,9 @@ public class Transaction {
     @Column
     private LocalDate date;
 
-    @NotBlank(message = "Categoria é obrigatória")
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Categoria é obrigatória")
     @Size(max = 50, message = "Categoria deve ter no máximo 50 caracteres")
     @Column(nullable = false)
-    private String category;
+    private CategoryEnum category;
 }

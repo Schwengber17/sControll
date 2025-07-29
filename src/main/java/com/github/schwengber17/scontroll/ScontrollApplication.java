@@ -14,6 +14,7 @@ import com.github.schwengber17.scontroll.model.entity.Account;
 import com.github.schwengber17.scontroll.model.entity.Family;
 import com.github.schwengber17.scontroll.model.entity.Transaction;
 import com.github.schwengber17.scontroll.model.entity.User;
+import com.github.schwengber17.scontroll.model.enums.CategoryEnum;
 import com.github.schwengber17.scontroll.model.repository.AccountRepository;
 import com.github.schwengber17.scontroll.model.repository.FamilyRepository;
 import com.github.schwengber17.scontroll.model.repository.TransactionRepository;
@@ -81,7 +82,7 @@ public class ScontrollApplication {
 					.amount(new BigDecimal("3500.00"))
 					.account(contaJoao)
 					.date(LocalDate.now().minusDays(5))
-					.category("Salário")
+					.category(CategoryEnum.SALARIO)
 					.build();
 			
 			Transaction gasto1 = Transaction.builder()
@@ -89,7 +90,7 @@ public class ScontrollApplication {
 					.amount(new BigDecimal("-450.00"))
 					.account(contaJoao)
 					.date(LocalDate.now().minusDays(3))
-					.category("Alimentação")
+					.category(CategoryEnum.ALIMENTACAO)
 					.build();
 			
 			Transaction receita2 = Transaction.builder()
@@ -97,7 +98,7 @@ public class ScontrollApplication {
 					.amount(new BigDecimal("2800.00"))
 					.account(contaMaria)
 					.date(LocalDate.now().minusDays(4))
-					.category("Salário")
+					.category(CategoryEnum.SALARIO)
 					.build();
 			
 			Transaction gasto2 = Transaction.builder()
@@ -105,7 +106,7 @@ public class ScontrollApplication {
 					.amount(new BigDecimal("-200.00"))
 					.account(contaMaria)
 					.date(LocalDate.now().minusDays(2))
-					.category("Transporte")
+					.category(CategoryEnum.TRANSPORTE)
 					.build();
 			
 			Transaction gasto3 = Transaction.builder()
@@ -113,7 +114,7 @@ public class ScontrollApplication {
 					.amount(new BigDecimal("-180.00"))
 					.account(contaJoao)
 					.date(LocalDate.now().minusDays(1))
-					.category("Utilidades")
+					.category(CategoryEnum.UTILIDADES)
 					.build();
 			
 			transactionRepository.saveAll(Arrays.asList(receita1, gasto1, receita2, gasto2, gasto3));

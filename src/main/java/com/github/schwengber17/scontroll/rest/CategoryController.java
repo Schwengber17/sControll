@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.schwengber17.scontroll.model.enums.CategoryEnum;
 import com.github.schwengber17.scontroll.model.repository.TransactionRepository;
 
 @RestController
@@ -20,11 +21,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<String> listarCategorias() {
-        return transactionRepository.findAll().stream()
-                .map(transaction -> transaction.getCategory())
-                .distinct()
-                .sorted()
-                .collect(Collectors.toList());
+    public CategoryEnum[] listarCategorias() {
+        return CategoryEnum.values();
     }
 }
