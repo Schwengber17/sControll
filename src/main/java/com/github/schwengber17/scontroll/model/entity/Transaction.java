@@ -51,7 +51,5 @@ public class Transaction {
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Categoria é obrigatória")
-    @Size(max = 50, message = "Categoria deve ter no máximo 50 caracteres")
-    @Column(nullable = false)
     private CategoryEnum category;
 }

@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 
 import com.github.schwengber17.scontroll.model.entity.Account;
 import com.github.schwengber17.scontroll.model.entity.Transaction;
+import com.github.schwengber17.scontroll.model.enums.CategoryEnum;
 import com.github.schwengber17.scontroll.model.repository.AccountRepository;
 import com.github.schwengber17.scontroll.model.repository.TransactionRepository;
 
@@ -66,12 +67,12 @@ public class TransactionController {
 
     @GetMapping("/account/{accountId}")
     public List<Transaction> listarPorConta(@PathVariable Integer accountId) {
-        return transactionRepository.findByAccountIdOrderByDateDesc(accountId);
+        return transactionRepository.findByAccountId(accountId);
     }
 
     @GetMapping("/category/{category}")
-    public List<Transaction> listarPorCategoria(@PathVariable String category) {
-        return transactionRepository.findByCategoryOrderByDateDesc(category);
+    public List<Transaction> listarPorCategoria(@PathVariable CategoryEnum category) {
+        return transactionRepository.findByCategory(category);
     }
 
     @PutMapping("{id}")

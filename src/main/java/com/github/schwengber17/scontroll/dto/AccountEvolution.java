@@ -11,8 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountEvolution {
+    private Integer accountId;
     private String accountName;
     private String ownerName;
+    
    // Colocar o balanco na classe diaria private BigDecimal balance;
     private List<DailyBalance> dailyBalances;
 }

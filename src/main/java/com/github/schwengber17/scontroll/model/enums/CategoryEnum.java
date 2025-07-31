@@ -6,9 +6,10 @@ public enum CategoryEnum {
     TRANSPORTE,
     EDUCACAO,
     LAZER,
+    UTILIDADES,
+
+
     SALARIO,
     INVESTIMENTOS,
-    UTILIDADES,
-    OUTROS;
-
+    MESADA;
 }

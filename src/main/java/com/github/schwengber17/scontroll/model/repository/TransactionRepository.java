@@ -9,7 +9,7 @@ import com.github.schwengber17.scontroll.model.enums.CategoryEnum;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
     
-    List<Transaction> findByAccount(Integer accountId);
+    List<Transaction> findByAccountId(Integer accountId);
     
     List<Transaction> findByCategory(CategoryEnum category);
     
