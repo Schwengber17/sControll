@@ -121,7 +121,6 @@ public class DashboardService {
         .map(Account::getBalance)
         .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-    // ✅ CALCULAR transações mensais do USUÁRIO
     List<Transaction> userMonthlyTransactions = accounts.stream()
         .flatMap(account -> transactionRepository.findByAccountId(account.getId()).stream())
         .filter(transaction -> {
@@ -130,7 +129,6 @@ public class DashboardService {
         })
         .collect(Collectors.toList());
 
-    // ✅ CALCULAR receitas e despesas mensais do USUÁRIO
     BigDecimal userMonthlyIncome = userMonthlyTransactions.stream()
         .filter(this::isIncome)
         .map(Transaction::getAmount)
@@ -139,7 +137,7 @@ public class DashboardService {
     BigDecimal userMonthlyExpenses = userMonthlyTransactions.stream()
         .filter(this::isExpense)
         .map(Transaction::getAmount)
-        .map(BigDecimal::abs)  // ✅ Garantir valor positivo
+        .map(BigDecimal::abs)  // Garantir valor positivo
         .reduce(BigDecimal.ZERO, BigDecimal::add);
     
     UserDTO dto = new UserDTO();

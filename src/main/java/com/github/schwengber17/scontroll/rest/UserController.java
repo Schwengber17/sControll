@@ -12,12 +12,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import com.github.schwengber17.scontroll.dto.UserDTO;
 import com.github.schwengber17.scontroll.model.entity.User;
-import com.github.schwengber17.scontroll.model.entity.Family;
 import com.github.schwengber17.scontroll.model.entity.Account;
-import com.github.schwengber17.scontroll.model.repository.UserRepository;
-import com.github.schwengber17.scontroll.model.repository.AccountRepository;
-import com.github.schwengber17.scontroll.exception.ResourceNotFoundException;
+import com.github.schwengber17.scontroll.services.UserService;
+import com.github.schwengber17.scontroll.services.AccountService;
 
 import java.util.List;
 
@@ -30,84 +29,40 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/api/users")
 public class UserController {
     
-    private final UserRepository userRepository;
-    private final AccountRepository accountRepository;
+    private final UserService userService;
+    private final AccountService accountService;
     
-    public UserController(UserRepository userRepository, AccountRepository accountRepository) {
-		this.userRepository = userRepository;
-        this.accountRepository = accountRepository;
+    public UserController(UserService userService, AccountService accountService) {
+        this.userService = userService;
+        this.accountService = accountService;
     }
 
     @PostMapping
     @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
     public User salvar(@Valid @RequestBody User user) {
-        // Garantir que accounts não seja processado na criação via UserController
-        user.setAccounts(null);
-        return userRepository.save(user);
+        return userService.createUser(user);
     }
 
     @GetMapping
     public List<User> listarTodos() {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
     @GetMapping("{id}")
-    public User acharPorId(@PathVariable Integer id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+    public UserDTO acharPorId(@PathVariable Integer id) {
+        return userService.getUserDTOById(id);
     }
-    
-    // @GetMapping("{id}/with-accounts")
-    // public User acharPorIdComContas(@PathVariable Integer id) {
-    //     User user = userRepository.findById(id)
-    //             .orElseThrow(() -> new ResponseStatusException(
-    //                     org.springframework.http.HttpStatus.NOT_FOUND, "User not found"));
-        
-    //     // Força o carregamento das contas para este endpoint específico
-    //     // O @JsonIgnore na entidade Account.user evita referência circular
-    //     user.getAccounts().size(); // Força o carregamento lazy
-    //     return user;
-    // }
     
     @DeleteMapping("{id}")
     @ResponseStatus(org.springframework.http.HttpStatus.NO_CONTENT)
     public void deletar(@PathVariable Integer id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-        
-        // Remove o usuário de todas as famílias antes de deletar
-        if (user.getFamilies() != null) {
-            for (Family family : user.getFamilies()) {
-                family.getUsers().remove(user);
-            }
-            user.getFamilies().clear();
-        }
-        
-        // As contas e transações serão deletadas em cascata devido à configuração
-        // cascade = CascadeType.ALL na relação @OneToMany
-        userRepository.delete(user);
+        userService.deleteUser(id);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(org.springframework.http.HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Integer id, @Valid @RequestBody User userUpdated) {
-        userRepository.findById(id)
-                .map( user -> {
-                    // ATENÇÃO: Apenas campos básicos do usuário são atualizados
-                    // Contas (accounts) NÃO podem ser editadas via UserController
-                    // Use AccountController para gerenciar contas
-                    user.setNome(userUpdated.getNome());
-                    user.setEmail(userUpdated.getEmail());
-                    user.setCpf(userUpdated.getCpf());
-                    
-                    // Explicitamente ignora qualquer alteração em accounts
-                    // mesmo que venha no JSON de entrada
-                    // accounts deve ser gerenciado apenas pelo AccountController
-                    
-                    return userRepository.save(user);
-                }
-                        )
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        userService.updateUser(id, userUpdated);
     }
     
     // DTO simples para criação de conta (sem precisar incluir userId)
@@ -128,26 +83,12 @@ public class UserController {
     @PostMapping("{id}/accounts")
     @ResponseStatus(org.springframework.http.HttpStatus.CREATED)
     public Account criarConta(@PathVariable Integer id, @Valid @RequestBody CreateAccountRequest request) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-        
-        Account account = Account.builder()
-                .name(request.name)
-                .description(request.description)
-                .balance(request.balance)
-                .user(user)
-                .build();
-        
-        return accountRepository.save(account);
+        return accountService.createAccountForUser(id, request.name, request.description, request.balance);
     }
 
     // GET /api/users/{id}/accounts - Listar contas de um usuário
     @GetMapping("{id}/accounts")
     public List<Account> listarContas(@PathVariable Integer id) {
-        // Verificar se o usuário existe
-        userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-        
-        return accountRepository.findByUserId(id);
+        return accountService.getAccountsByUserId(id);
     }
 }
